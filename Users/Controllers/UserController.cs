@@ -11,6 +11,8 @@ namespace Users.Controllers
 {
     public class UserController : Controller
     {
+        // De exemplu tu faci niste schimbari, comentariu care il vezi tot se socoate schimbari
+        // Noi am scris un comentariu, deci putem s facem push pe git, fix ca dupa instructie
         public const string CONNECTION_STRING = @"Server=(LocalDb)\MSSQLLocalDB;Database=UserInformation;Trusted_Connection=True";
 
         List<PhoneType> phoneTypes = new List<PhoneType>();
