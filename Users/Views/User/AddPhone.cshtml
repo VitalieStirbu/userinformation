@@ -1,0 +1,25 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "AddPhone";
+}
+
+<h3>Add phone number</h3>
+
+<form asp-controller="User" asp-action="AddPhone">
+
+    <input type="hidden" asp-for="ID" name="ID">
+
+    <label class="input-lg">Phone number</label>
+    <input type="number" class="form-control" asp-for="Phone" name="Phone" />
+
+    <label class="input-sm">Phone type</label>
+    <select asp-for="PhoneTypeID" name="PhoneTypeID" class="form-control">
+        @foreach (var item in ViewBag.Phone)
+        {
+            <option value="@item.ID">@item.Type</option>
+        }
+    </select>
+    <br />
+    <button type="submit" class="btn btn-primary">Add phone!</button>
+</form>

@@ -1,0 +1,25 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "AddAddress";
+}
+
+<h3>Add Address</h3>
+
+<form asp-controller="User" asp-action="AddAddress">
+
+    <input type="hidden" asp-for="ID" />
+
+    <lable name="Country">Country</lable>
+    <select asp-for="CountryID" class="form-control">
+        @foreach(Country country in ViewBag.Country)
+        {
+            <option value="@country.ID">@country.CountryType</option>
+        }
+    </select>
+
+    <lable name="Street">Street</lable>
+    <input class="form-control" name="Street" asp-for="Street" />
+
+    <button class="btn btn-primary" type="submit">Add address!</button>
+</form>

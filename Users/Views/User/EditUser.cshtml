@@ -1,0 +1,44 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<form asp-controller="User" asp-action="EditUser">
+
+    <input type="hidden" asp-for="ID" name="ID" />
+
+    <label class="input-lg" name="FirstName">First Name</label>
+    <input class="form-control" asp-for="FirstName" name="FirstName" />
+
+    <label class="input-lg" name="SecondName">Second name</label>
+    <input class="form-control" asp-for="SecondName" name="SecondName" />
+
+    <label class="input-lg" name="Age">Age</label>
+    <input class="form-control" asp-for="Age" name="Age" />
+
+    <label class="input-lg" name="Street">Street</label>
+    <input class="form-control" asp-for="Street" name="Street" />
+
+    <label class="input-lg" name="Country">Country</label>
+    <select class="form-control" asp-for="CountryID">
+        @foreach (Country country in ViewBag.Countries)
+        {
+            <option value="@country.ID">@country.CountryType</option>
+        }
+    </select>
+
+    <label class="input-lg" name="Phone">Phone</label>
+    <input class="form-control" asp-for="Phone" name="Phone" />
+
+    <label class="input-lg" name="PhoneType">PhoneType</label>
+    <select class="form-control" asp-for="PhoneTypeID">
+        @foreach(PhoneType phone in ViewBag.Phones)
+        {
+            <option value="@phone.ID">@phone.Type</option>
+        }
+    </select>
+
+    <button type="submit" class="btn btn-primary">Edit user!</button>
+
+</form>

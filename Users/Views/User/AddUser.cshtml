@@ -1,0 +1,57 @@
+﻿    @model User
+
+@{
+    ViewData["Title"] = "AddUser";
+}
+
+<form asp-controller="User" asp-action="AddUser">
+
+    <input type="hidden" asp-for="ID" name="ID"/>
+
+    <label class="input-lg" name="FirstName">First Name</label>
+    <input type="text" asp-for="FirstName"  class="form-control" name="FirstName"/>
+
+
+    <label class="input-lg" name="SecondName">Second Name</label>
+    <input type="text" asp-for="SecondName"  class="form-control" name="SecondName"/>
+
+
+    <label class="input-sm" name="Age">Age</label>
+    <input type="number" asp-for="Age"  class="form-control" name="Age"/>
+
+
+    <label class="input-sm" name="Phone">Phone</label>
+    <input type="number" asp-for="Phone"  class="form-control" name="Phone"/>
+
+
+
+    <label class="input-sm" name="PhoneTypeID">Phone Type</label>
+    <select asp-for="PhoneTypeID" class="form-control" name="PhoneTypeID">
+        @foreach (var item in ViewBag.Phones)
+        {
+            <option value="@item.ID">@item.Type</option>
+        }
+    </select>
+
+
+    <label class="input-sm" name="CountryID">Country</label>
+    <select asp-for="CountryID" class="form-control" name="CountryID">
+        @foreach (Country item in ViewBag.Countries)
+        {
+            <option value="@item.ID" >@item.CountryType</option>
+        }
+    </select>
+
+
+    <label class="input-sm" name="Street">Street</label>
+    <select asp-for="AddressID" name="AddressID">
+        @foreach(var item in ViewBag.Addresses)
+        {
+            <option value="@item.ID">@item.Street</option>
+        }
+    </select>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Add user!</button>
+
+</form>
