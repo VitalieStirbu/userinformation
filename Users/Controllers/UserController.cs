@@ -13,6 +13,7 @@ namespace Users.Controllers
     {
         // De exemplu tu faci niste schimbari, comentariu care il vezi tot se socoate schimbari
         // Noi am scris un comentariu, deci putem s facem push pe git, fix ca dupa instructie
+        // test test test
         public const string CONNECTION_STRING = @"Server=(LocalDb)\MSSQLLocalDB;Database=UserInformation;Trusted_Connection=True";
 
         List<PhoneType> phoneTypes = new List<PhoneType>();
@@ -93,20 +94,20 @@ namespace Users.Controllers
             return addresses;
         }
 
-        //public bool HasMorePhones(List<User> users)
-        //{
-        //    int numberOfPhones = 0;
-        //    foreach (var user in users)
-        //    {
-        //        if (user.Phone != 0)
-        //            numberOfPhones++;
-        //    }
+        public bool HasMorePhones(List<User> users)
+        {
+            int numberOfPhones = 0;
+            foreach (var user in users)
+            {
+                if (user.Phone != 0)
+                    numberOfPhones++;
+            }
 
-        //    if (numberOfPhones == 1)
-        //        return false;
-        //    else
-        //        return true;
-        //}
+            if (numberOfPhones == 1)
+                return false;
+            else
+                return true;
+        }
 
 
         public IActionResult Index()
