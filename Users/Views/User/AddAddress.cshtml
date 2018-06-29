@@ -19,7 +19,12 @@
     </select>
 
     <lable name="Street">Street</lable>
-    <input class="form-control" name="Street" asp-for="Street" />
+    <select asp-for="AddressID" name="AddressID">
+        @foreach(Addresses item in ViewBag.Addresses)
+        {
+            <option value="@item.ID">@item.Street</option>
+        }
+    </select>
 
     <button class="btn btn-primary" type="submit">Add address!</button>
 </form>

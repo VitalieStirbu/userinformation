@@ -29,7 +29,7 @@
             <td>@user.PhoneType</td>
             <td>@user.Country</td>
             <td>@user.Street</td>
-            <td><a asp-controller="User" asp-action="AddAddress" asp-route-id="@user.ID"><span class="glyphicon glyphicon-plus">  Add street</span></a><strong>|</strong><a asp-controller="User" asp-action="DeleteAddress" asp-route-street="@user.Street"><span class="glyphicon glyphicon-trash">  Delete street</span></a> </td>
+            <td><a asp-controller="User" asp-action="AddAddress" asp-route-id="@user.ID"><span class="glyphicon glyphicon-plus">  Add street</span></a><strong>|</strong><a asp-controller="User" asp-action="DeleteAddress" asp-route-streetID="@user.AddressID"><span class="glyphicon glyphicon-trash">  Delete street</span></a> </td>
             <td><a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.ID"><span class="glyphicon glyphicon-trash">  Remove user</span></a> <strong>|</strong><a asp-controller="User" asp-action="DeletePhone" asp-route-phoneNumber="@user.Phone">  Remove phone</a></td>
             <td><a asp-controller="User" asp-action="EditUser" asp-route-id="@user.ID"><span class="glyphicon glyphicon-edit">  Edit user</span></a></td>
         </tr>   

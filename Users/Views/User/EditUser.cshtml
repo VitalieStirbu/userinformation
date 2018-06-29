@@ -18,7 +18,12 @@
     <input class="form-control" asp-for="Age" name="Age" />
 
     <label class="input-lg" name="Street">Street</label>
-    <input class="form-control" asp-for="Street" name="Street" />
+    <select asp-for="AddressID" name="AddressID">
+        @foreach(Addresses item in ViewBag.Addresses)
+        {
+            <option value="@item.ID">@item.Street</option>
+        }
+    </select>
 
     <label class="input-lg" name="Country">Country</label>
     <select class="form-control" asp-for="CountryID">

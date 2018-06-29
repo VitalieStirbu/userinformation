@@ -167,7 +167,6 @@ namespace Users.Controllers
                 com.Parameters.AddWithValue("@FirstName", user.FirstName);
                 com.Parameters.AddWithValue("@SecondName", user.SecondName);
                 com.Parameters.AddWithValue("@Age", user.Age);
-                com.Parameters.AddWithValue("@Street", user.Street);
                 com.Parameters.AddWithValue("@AddressID", user.AddressID);
                 com.Parameters.AddWithValue("@CountryID", user.CountryID);
                 com.Parameters.AddWithValue("@Phone", user.Phone);
@@ -197,7 +196,8 @@ namespace Users.Controllers
         {
             ViewBag.Phones = ReturnPhoneTypeList();
             ViewBag.Countries = ReturnCountryList();
-            //User
+            ViewBag.Addresses = ReturnAddressesList();
+
             return View();
         }
 
@@ -213,7 +213,7 @@ namespace Users.Controllers
                 com.Parameters.AddWithValue("@FirstName", user.FirstName);
                 com.Parameters.AddWithValue("@SecondName", user.SecondName);
                 com.Parameters.AddWithValue("@Age", user.Age);
-                com.Parameters.AddWithValue("@Street", user.Street);
+                com.Parameters.AddWithValue("@AddressID", user.AddressID);
                 com.Parameters.AddWithValue("@CountryID", user.CountryID);
                 com.Parameters.AddWithValue("@Phone", user.Phone);
                 com.Parameters.AddWithValue("@PhoneTypeID", user.PhoneTypeID);
@@ -265,6 +265,8 @@ namespace Users.Controllers
         public IActionResult AddAddress(int id)
         {
             ViewBag.Country = ReturnCountryList();
+            ViewBag.Addresses = ReturnAddressesList();
+
             return View();
         }
 
@@ -278,14 +280,14 @@ namespace Users.Controllers
                 com.CommandType = CommandType.StoredProcedure;
 
                 com.Parameters.AddWithValue("@ID", user.ID);
-                com.Parameters.AddWithValue("@Street", user.Street);
+                com.Parameters.AddWithValue("@AddresID", user.AddressID);
                 com.Parameters.AddWithValue("@CountryID", user.CountryID);
                 com.ExecuteNonQuery();
             }
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteAddress(int id, string street)
+        public IActionResult DeleteAddress(string streetID)
         {
             using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
             using (SqlCommand com = new SqlCommand("sp_DeleteAddress", con))
@@ -293,7 +295,7 @@ namespace Users.Controllers
                 con.Open();
                 com.CommandType = CommandType.StoredProcedure;
 
-                com.Parameters.AddWithValue("@Street", street);
+                com.Parameters.AddWithValue("@StreetID", streetID);
                 com.ExecuteNonQuery();
             }
 
