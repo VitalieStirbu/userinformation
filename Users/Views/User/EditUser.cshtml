@@ -3,12 +3,13 @@
 @{
     ViewData["Title"] = "EditUser";
 }
-
+<h3>Edit user</h3>
+<br />
 <form asp-controller="User" asp-action="EditUser">
 
     <input type="hidden" asp-for="ID" name="ID" />
 
-    <label class="input-lg" name="FirstName">First Name</label>
+    <label class="input-lg" name="FirstName">First name</label>
     <input class="form-control" asp-for="FirstName" name="FirstName" />
 
     <label class="input-lg" name="SecondName">Second name</label>
@@ -17,15 +18,15 @@
     <label class="input-lg" name="Age">Age</label>
     <input class="form-control" asp-for="Age" name="Age" />
 
-    <label class="input-lg" name="Street">Street</label>
-    <select asp-for="AddressID" name="AddressID">
+    <label class="input-sm" name="Street">Street</label>
+    <select asp-for="AddressID" name="AddressID" class="form-control">
         @foreach(Addresses item in ViewBag.Addresses)
         {
             <option value="@item.ID">@item.Street</option>
         }
     </select>
 
-    <label class="input-lg" name="Country">Country</label>
+    <label class="input-sm" name="Country">Country</label>
     <select class="form-control" asp-for="CountryID">
         @foreach (Country country in ViewBag.Countries)
         {
@@ -33,17 +34,17 @@
         }
     </select>
 
-    <label class="input-lg" name="Phone">Phone</label>
+    <label class="input-sm" name="Phone">Phone</label>
     <input class="form-control" asp-for="Phone" name="Phone" />
 
-    <label class="input-lg" name="PhoneType">PhoneType</label>
+    <label class="input-sm" name="PhoneType">Phone type</label>
     <select class="form-control" asp-for="PhoneTypeID">
         @foreach(PhoneType phone in ViewBag.Phones)
         {
             <option value="@phone.ID">@phone.Type</option>
         }
     </select>
-
+    <br />
     <button type="submit" class="btn btn-primary">Edit user!</button>
 
 </form>

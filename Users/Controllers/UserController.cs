@@ -97,6 +97,7 @@ namespace Users.Controllers
         public bool HasMorePhones(List<User> users)
         {
             int numberOfPhones = 0;
+
             foreach (var user in users)
             {
                 if (user.Phone != 0)
@@ -107,6 +108,7 @@ namespace Users.Controllers
                 return false;
             else
                 return true;
+
         }
 
 
@@ -115,33 +117,34 @@ namespace Users.Controllers
             List<User> users = new List<User>();
 
             using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
-            using (SqlCommand com = new SqlCommand("sp_GetUsers", con))
             {
-                con.Open();
-                com.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = com.ExecuteReader())
+                using (SqlCommand com = new SqlCommand("sp_GetUsers", con))
                 {
-                    while (reader.Read())
+                    con.Open();
+                    com.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = com.ExecuteReader())
                     {
-                        User user = new User()
+                        while (reader.Read())
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            FirstName = reader["FirstName"].ToString(),
-                            SecondName = reader["SecondName"].ToString(),
-                            Age = Convert.ToInt32(reader["Age"]),
-                            //CountryID = Convert.ToInt32(reader["CountryID"]),
-                            Country = reader["Country"].ToString(),
-                            Phone = Convert.ToInt32(reader["Phone"]),
-                            PhoneType = reader["PhoneType"].ToString(),
-                            Street = reader["Street"].ToString()
-                        };
-                        users.Add(user);
+                            User user = new User()
+                            {
+                                ID = Convert.ToInt32(reader["ID"]),
+                                FirstName = reader["FirstName"].ToString(),
+                                SecondName = reader["SecondName"].ToString(),
+                                Age = Convert.ToInt32(reader["Age"]),
+                                Country = reader["Country"].ToString(),
+                                Street = reader["Street"].ToString(),
+                                Phone = Convert.ToInt32(reader["Phone"]),
+                                PhoneType = reader["PhoneType"].ToString()
+                            };
+                            users.Add(user);
+                        }
                     }
                 }
             }
 
-            //ViewBag.HasMorePhones = HasMorePhones(users);
+            ViewBag.HasMorePhones = HasMorePhones(users);
             return View(users);
         }
 
@@ -227,6 +230,7 @@ namespace Users.Controllers
         public IActionResult AddPhone(int id)
         {
             ViewBag.Phone = ReturnPhoneTypeList();
+
             return View();
         }
 
@@ -280,22 +284,22 @@ namespace Users.Controllers
                 com.CommandType = CommandType.StoredProcedure;
 
                 com.Parameters.AddWithValue("@ID", user.ID);
-                com.Parameters.AddWithValue("@AddresID", user.AddressID);
+                com.Parameters.AddWithValue("@AddressID", user.AddressID);
                 com.Parameters.AddWithValue("@CountryID", user.CountryID);
                 com.ExecuteNonQuery();
             }
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteAddress(string streetID)
+        public IActionResult DeleteAddress(int streetID, int countryID)
         {
             using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
             using (SqlCommand com = new SqlCommand("sp_DeleteAddress", con))
             {
                 con.Open();
                 com.CommandType = CommandType.StoredProcedure;
-
-                com.Parameters.AddWithValue("@StreetID", streetID);
+                com.Parameters.AddWithValue("@AddressID", streetID);
+                com.Parameters.AddWithValue("@CountryID", countryID);
                 com.ExecuteNonQuery();
             }
 

@@ -1,10 +1,10 @@
-﻿@model User
+﻿ @model User
 
 @{
     ViewData["Title"] = "AddAddress";
 }
 
-<h3>Add Address</h3>
+<h3>Add address</h3>
 
 <form asp-controller="User" asp-action="AddAddress">
 
@@ -19,12 +19,12 @@
     </select>
 
     <lable name="Street">Street</lable>
-    <select asp-for="AddressID" name="AddressID">
+    <select asp-for="AddressID" name="AddressID" class="form-control">
         @foreach(Addresses item in ViewBag.Addresses)
         {
             <option value="@item.ID">@item.Street</option>
         }
     </select>
-
+    <br />
     <button class="btn btn-primary" type="submit">Add address!</button>
 </form>

@@ -16,7 +16,7 @@
     <input type="text" asp-for="SecondName"  class="form-control" name="SecondName"/>
 
 
-    <label class="input-sm" name="Age">Age</label>
+    <label class="input-lg" name="Age">Age</label>
     <input type="number" asp-for="Age"  class="form-control" name="Age"/>
 
 
@@ -44,7 +44,7 @@
 
 
     <label class="input-sm" name="Street">Street</label>
-    <select asp-for="AddressID" name="AddressID">
+    <select asp-for="AddressID" name="AddressID" class="form-control">
         @foreach(var item in ViewBag.Addresses)
         {
             <option value="@item.ID">@item.Street</option>
