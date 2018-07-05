@@ -15,7 +15,6 @@ namespace Users.Controllers
 
         DbHandler _dbHandler = new DbHandler();
 
-
         public bool HasMorePhones(List<User> users)
         {
             int numberOfPhones = 0;
@@ -208,15 +207,16 @@ namespace Users.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteAddress(int streetID, int countryID)
+        public IActionResult DeleteAddress(int id, string street, string country)
         {
             using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
             using (SqlCommand com = new SqlCommand("sp_DeleteAddress", con))
             {
                 con.Open();
                 com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@AddressID", streetID);
-                com.Parameters.AddWithValue("@CountryID", countryID);
+                com.Parameters.AddWithValue("@ID", id);
+                com.Parameters.AddWithValue("@Street", street);
+                com.Parameters.AddWithValue("@Country", country);
                 com.ExecuteNonQuery();
             }
 
