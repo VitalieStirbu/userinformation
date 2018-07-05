@@ -5,42 +5,43 @@
     ViewData["Title"] = "Index";
 }
 
+<h1>All users: </h1>
+<br />
 <table class="table table-bordered table-striped table-hover">
-    <caption>Users:</caption>
     <tr>
         <th>First name</th>
         <th>Second name</th>
         <th>Age</th>
         <th>Street</th>
         <th>Country</th>
+        <th>Add address</th>
+        <th>Delete address</th>
         <th>Phone number</th>
         <th>Phone type</th>
-        <td></td>
+        <th>Add phone</th>
+        <th>Delete phone</th>
+        <th>Edit user</th>
+        <th>Remove User</th>
     </tr>
 
     @foreach (User user in Model)
     {
-        <tr>
-            <td>@user.FirstName </td>
-            <td>@user.SecondName</td>
-            <td>@user.Age</td>
-            <td>@user.Street</td>
-            <td>@user.Country</td>
-            <td>@user.Phone</td>
-            <td>@user.PhoneType</td>
-        </tr>
+    <tr>
+        <td>@user.FirstName </td>
+        <td>@user.SecondName</td>
+        <td>@user.Age</td>
+        <td>@user.Street</td>
+        <td>@user.Country</td>
+        <td class="text-center"><a asp-controller="User" asp-action="AddAddress" asp-route-id="@user.ID"><span class="glyphicon glyphicon-plus"></span></a></td>
+        <td class="text-center"><a asp-controller="User" asp-action="DeleteAddress" asp-route-streetID="@user.AddressID" asp-route-countryID="@user.CountryID"><span class="glyphicon glyphicon-trash"></span></a></td>
+        <td>@user.Phone</td>
+        <td>@user.PhoneType</td>
+        <td class="text-center"><a asp-controller="User" asp-action="AddPhone" asp-route-id="@user.ID"><span class="glyphicon glyphicon-plus"></span></a></td>
+        <td class="text-center"><a asp-controller="User" asp-action="DeletePhone" asp-route-phoneNumber="@user.Phone"><span class="glyphicon glyphicon-trash"></span></a></td>
+        <td class="text-center"><a asp-controller="User" asp-action="EditUser" asp-route-id="@user.ID"><span class="glyphicon glyphicon-edit"></span></a></td>
+        <td class="text-center"><a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.ID"><span class="glyphicon glyphicon-trash"></span></a></td>
+    </tr>
     }
 </table>
 
-<a asp-controller="User" asp-action="AddUser"><strong>Add user</strong></a>
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" id="#SeeMoreOptions" data-toggle="dropdown">See options<span class="glyphicon glyphicon-chevron-down"></span></button>
-    <ul class="dropdown-menu" aria-labelledby="SeeMoreOptions">
-        <li><a asp-controller="User" asp-action="AddPhone"><span class="glyphicon glyphicon-plus">Add phone</span></a></li>
-        <li><a asp-controller="User" asp-action="AddAddress"><span class="glyphicon glyphicon-plus">Add street</span></a></li>
-        <li><a asp-controller="User" asp-action="DeleteAddress"><span class="glyphicon glyphicon-trash">Delete street</span></a></li>
-        <li><a asp-controller="User" asp-action="DeleteUser"><span class="glyphicon glyphicon-trash">Remove user</span></a></li>
-        <li><a asp-controller="User" asp-action="DeletePhone"><span class="glyphicon glyphicon-trash">Remove phone</span></a></li>
-        <li><a asp-controller="User" asp-action="EditUser"><span class="glyphicon glyphicon-edit">Edit user</span></a></li>
-    </ul>
-</div>
+<a class="btn btn-default" asp-controller="User" asp-action="AddUser">Add user!</a>

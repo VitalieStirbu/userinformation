@@ -11,88 +11,10 @@ namespace Users.Controllers
 {
     public class UserController : Controller
     {
-        // De exemplu tu faci niste schimbari, comentariu care il vezi tot se socoate schimbari
-        // Noi am scris un comentariu, deci putem s facem push pe git, fix ca dupa instructie
-        // test test test
         public const string CONNECTION_STRING = @"Server=(LocalDb)\MSSQLLocalDB;Database=UserInformation;Trusted_Connection=True";
 
-        List<PhoneType> phoneTypes = new List<PhoneType>();
-        List<Country> countries = new List<Country>();
-        List<Addresses> addresses = new List<Addresses>();
+        DbHandler _dbHandler = new DbHandler();
 
-
-        public List<Country> ReturnCountryList()
-        {
-            using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
-            {
-                using (SqlCommand com = new SqlCommand("select * from Countries", con))
-                {
-                    con.Open();
-                    com.CommandType = CommandType.Text;
-
-                    using (SqlDataReader reader = com.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Country country = new Country()
-                            {
-                                ID = Convert.ToInt32(reader["ID"]),
-                                CountryType = reader["Country"].ToString()
-                            };
-
-                            countries.Add(country);
-                        }
-                    }
-                }
-            }
-            return countries;
-        }
-
-        public List<PhoneType> ReturnPhoneTypeList()
-        {
-            using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
-            {
-                using (SqlCommand com = new SqlCommand("sp_GetPhoneType", con))
-                {
-                    con.Open();
-                    com.CommandType = CommandType.StoredProcedure;
-
-                    using (SqlDataReader reader = com.ExecuteReader())
-                        while (reader.Read())
-                        {
-                            PhoneType phoneType = new PhoneType()
-                            {
-                                ID = Convert.ToInt32(reader["ID"]),
-                                Type = reader["PhoneType"].ToString()
-                            };
-                            phoneTypes.Add(phoneType);
-                        }
-                }
-            }
-
-            return phoneTypes;
-        }
-
-        public List<Addresses> ReturnAddressesList()
-        {
-            using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
-            using (SqlCommand com = new SqlCommand("select * from Addresses", con))
-            {
-                con.Open();
-                com.CommandType = CommandType.Text;
-                using (SqlDataReader reader = com.ExecuteReader())
-                    while (reader.Read())
-                    {
-                        Addresses address = new Addresses()
-                        {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            Street = reader["Street"].ToString()
-                        };
-                        addresses.Add(address);
-                    }
-            }
-            return addresses;
-        }
 
         public bool HasMorePhones(List<User> users)
         {
@@ -104,13 +26,8 @@ namespace Users.Controllers
                     numberOfPhones++;
             }
 
-            if (numberOfPhones == 1)
-                return false;
-            else
-                return true;
-
+            return numberOfPhones != 1;
         }
-
 
         public IActionResult Index()
         {
@@ -151,9 +68,9 @@ namespace Users.Controllers
         [HttpGet]
         public IActionResult AddUser()
         {
-            ViewBag.Phones = ReturnPhoneTypeList();
-            ViewBag.Countries = ReturnCountryList();
-            ViewBag.Addresses = ReturnAddressesList();
+            ViewBag.Phones = _dbHandler.ReturnPhoneTypeList();
+            ViewBag.Countries = _dbHandler.ReturnCountryList();
+            ViewBag.Addresses = _dbHandler.ReturnAddressesList();
 
             return View();
         }
@@ -197,9 +114,9 @@ namespace Users.Controllers
         [HttpGet]
         public IActionResult EditUser(int id)
         {
-            ViewBag.Phones = ReturnPhoneTypeList();
-            ViewBag.Countries = ReturnCountryList();
-            ViewBag.Addresses = ReturnAddressesList();
+            ViewBag.Phones = _dbHandler.ReturnPhoneTypeList();
+            ViewBag.Countries = _dbHandler.ReturnCountryList();
+            ViewBag.Addresses = _dbHandler.ReturnAddressesList();
 
             return View();
         }
@@ -229,7 +146,7 @@ namespace Users.Controllers
         [HttpGet]
         public IActionResult AddPhone(int id)
         {
-            ViewBag.Phone = ReturnPhoneTypeList();
+            ViewBag.Phone = _dbHandler.ReturnPhoneTypeList();
 
             return View();
         }
@@ -268,8 +185,8 @@ namespace Users.Controllers
         [HttpGet]
         public IActionResult AddAddress(int id)
         {
-            ViewBag.Country = ReturnCountryList();
-            ViewBag.Addresses = ReturnAddressesList();
+            ViewBag.Country = _dbHandler.ReturnCountryList();
+            ViewBag.Addresses = _dbHandler.ReturnAddressesList();
 
             return View();
         }
