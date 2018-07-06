@@ -16,6 +16,7 @@ namespace Users.Models
         public string Country { get; set; }
         public int CountryID { get; set; }
         public int Phone { get; set; }
+        public int PhoneID { get; set; } //phone id from dbo.Phones SQL
         public string PhoneType { get; set; }
         public int PhoneTypeID { get; set; }
     }

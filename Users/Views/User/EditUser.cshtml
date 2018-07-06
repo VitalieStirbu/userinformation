@@ -9,6 +9,8 @@
 
     <input type="hidden" asp-for="ID" name="ID" />
 
+    <input type="hidden" asp-for="PhoneID" name="PhoneID" />
+
     <label class="input-lg" name="FirstName">First name</label>
     <input class="form-control" asp-for="FirstName" name="FirstName" />
 
@@ -22,7 +24,7 @@
     <select asp-for="AddressID" name="AddressID" class="form-control">
         @foreach(Addresses item in ViewBag.Addresses)
         {
-            <option value="@item.ID">@item.Street</option>
+            <option selected value="@item.ID">@item.Street</option>
         }
     </select>
 
@@ -30,7 +32,7 @@
     <select class="form-control" asp-for="CountryID">
         @foreach (Country country in ViewBag.Countries)
         {
-            <option value="@country.ID">@country.CountryType</option>
+            <option selected value="@country.ID">@country.CountryType</option>
         }
     </select>
 
@@ -41,7 +43,7 @@
     <select class="form-control" asp-for="PhoneTypeID">
         @foreach(PhoneType phone in ViewBag.Phones)
         {
-            <option value="@phone.ID">@phone.Type</option>
+            <option selected value="@phone.ID">@phone.Type</option>
         }
     </select>
     <br />
