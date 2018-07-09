@@ -57,21 +57,32 @@ namespace Users.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUser(int id, int phoneID)
+        public IActionResult EditUser(int id, int phoneID, string address, string country)
         {
           //var user = _dbHandler.GetUser(id);
             ViewBag.Phones = _dbHandler.ReturnPhoneTypeList();
             ViewBag.Countries = _dbHandler.ReturnCountryList();
             ViewBag.Addresses = _dbHandler.ReturnAddressesList();
 
-            return View(_dbHandler.CurrentUserInfo(id));
+            return View(_dbHandler.CurrentUserInfo(id, address, country));
         }
 
         [HttpPost]
         public IActionResult EditUser(User user)
         {
+            //if (ModelState.IsValid)
+            //{
+            //_dbHandler.EditUser(user);
+            //return RedirectToAction("Index");
+            //}
+
             _dbHandler.EditUser(user);
-            return RedirectToAction("Index");
+
+            //ViewBag.Phones = _dbHandler.ReturnPhoneTypeList();
+            //ViewBag.Addresses = _dbHandler.ReturnAddressesList();
+            //ViewBag.Countries = _dbHandler.ReturnCountryList();
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

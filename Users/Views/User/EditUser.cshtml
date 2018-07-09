@@ -3,28 +3,48 @@
 @{
     ViewData["Title"] = "EditUser";
 }
+
 <h3>Edit user</h3>
 <br />
-<form asp-controller="User" asp-action="EditUser">
+<form asp-controller="User" asp-action="EditUser" id="userForm">
 
     <input type="hidden" asp-for="ID" name="ID" />
 
     <input type="hidden" asp-for="PhoneID" name="PhoneID" />
 
-    <label class="input-lg" name="FirstName">First name</label>
-    <input class="form-control" asp-for="FirstName" name="FirstName" />
+    <input type="hidden" asp-for="OldAddressID" name="OldAddressID" />
 
-    <label class="input-lg" name="SecondName">Second name</label>
-    <input class="form-control" asp-for="SecondName" name="SecondName" />
+    <input type="hidden" asp-for="OldCountryID" name="CountryID" />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <label name="FirstName">First name</label>
+            <input class="form-control" asp-for="FirstName" name="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6">
+            <label name="SecondName">Second name</label>
+            <input class="form-control" asp-for="SecondName" name="SecondName" />
+
+        </div>
+    </div>
+
 
     <label class="input-lg" name="Age">Age</label>
     <input class="form-control" asp-for="Age" name="Age" />
 
     <label class="input-sm" name="Street">Street</label>
     <select asp-for="AddressID" name="AddressID" class="form-control">
-        @foreach(Addresses item in ViewBag.Addresses)
+        @foreach (Addresses item in ViewBag.Addresses)
         {
-            <option selected value="@item.ID">@item.Street</option>
+            if (item.ID == Model.AddressID)
+            {
+                <option selected value="@item.ID">@item.Street</option>
+            }
+            else
+            {
+                <option value="@item.ID">@item.Street</option>
+            }
         }
     </select>
 
@@ -32,7 +52,14 @@
     <select class="form-control" asp-for="CountryID">
         @foreach (Country country in ViewBag.Countries)
         {
-            <option selected value="@country.ID">@country.CountryType</option>
+            if (country.ID == Model.CountryID)
+            {
+                <option selected value="@country.ID">@country.CountryType</option>
+            }
+            else
+            {
+                <option value="@country.ID">@country.CountryType</option>
+            }
         }
     </select>
 
@@ -41,12 +68,35 @@
 
     <label class="input-sm" name="PhoneType">Phone type</label>
     <select class="form-control" asp-for="PhoneTypeID">
-        @foreach(PhoneType phone in ViewBag.Phones)
+        @foreach (PhoneType phone in ViewBag.Phones)
         {
-            <option selected value="@phone.ID">@phone.Type</option>
+            if (phone.ID == Model.PhoneID)
+            {
+                <option selected value="@phone.ID">@phone.Type</option>
+            }
+
+            else
+            {
+                <option value="@phone.ID">@phone.Type</option>
+            }
         }
     </select>
     <br />
+    <div asp-validation-summary="All"></div>
     <button type="submit" class="btn btn-primary">Edit user!</button>
 
 </form>
+
+@*<script>
+        var form = document.getElementById("userForm");
+
+        form.onsubmit = function (e) {
+            var firstName = document.getElementById("FirstName");
+            if (firstName.value === "") {
+                alert("Nu fi prost!");
+
+                // Lini asta ca sa nu trimiti requestu la server.
+                e.preventDefault();
+            }
+        }
+    </script>*@

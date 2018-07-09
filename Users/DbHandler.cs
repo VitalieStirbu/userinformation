@@ -84,6 +84,8 @@ namespace Users
             return addresses;
         }
 
+
+
         public List<User> GetAllUsers()
         {
             List<User> users = new List<User>();
@@ -165,13 +167,15 @@ namespace Users
                 com.Parameters.AddWithValue("@AddressID", user.AddressID);
                 com.Parameters.AddWithValue("@CountryID", user.CountryID);
                 com.Parameters.AddWithValue("@Phone", user.Phone);
+                com.Parameters.AddWithValue("@OldAddressID", user.OldAddressID);
+                com.Parameters.AddWithValue("@OldCountryID", user.OldCountryID);
                 com.Parameters.AddWithValue("@PhoneID", user.PhoneID);
                 com.Parameters.AddWithValue("@PhoneTypeID", user.PhoneTypeID);
                 com.ExecuteNonQuery();
             }
         }
 
-        public User CurrentUserInfo(int id)
+        public User CurrentUserInfo(int id, string oldAddress, string oldCountry)
         {
             var user = new User();
 
@@ -182,6 +186,8 @@ namespace Users
                 com.CommandType = CommandType.StoredProcedure;
 
                 com.Parameters.AddWithValue("@ID", id);
+                com.Parameters.AddWithValue("@OldAddress", oldAddress);
+                com.Parameters.AddWithValue("@OldCountry", oldCountry);
 
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
@@ -196,7 +202,9 @@ namespace Users
                             Street = reader["Street"].ToString(),
                             Country = reader["Country"].ToString(),
                             Phone = Convert.ToInt32(reader["Phone"]),
-                            PhoneType = reader["PhoneType"].ToString()
+                            PhoneType = reader["PhoneType"].ToString(),
+                            OldAddressID = Convert.ToInt32(reader["AddressID"]),
+                            OldCountryID = Convert.ToInt32(reader["CountryID"])
                         };
                     }
                 }
